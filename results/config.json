@@ -1,0 +1,12 @@
+{
+  "dataset_dir": "/media/hjs/ext_1tb/savref/dataset",
+  "results_dir": "/media/hjs/ext_1tb/savref/results",
+  "bug_id": "Netty-1",
+  "model_type": "openai",
+  "model_size": "large",
+  "use_graph": true,
+  "joern": true,
+  "codeql": true,
+  "semgrep": true,
+  "evaluate": true
+}

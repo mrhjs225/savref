@@ -1,0 +1,151 @@
+rules:
+  - id: java-sql-injection
+    patterns:
+      - pattern: |
+          $QUERY = "... " + $INPUT + " ...";
+          ...$STMT.execute($QUERY);
+      - pattern: |
+          $QUERY = "... " + $INPUT + " ...";
+          ...$STMT.executeQuery($QUERY);
+      - pattern: |
+          $QUERY = "... " + $INPUT + " ...";
+          ...$STMT.executeUpdate($QUERY);
+      - pattern: |
+          $QUERY = String.format("...", $INPUT);
+          ...$STMT.execute($QUERY);
+    message: "SQL Injection vulnerability detected: user input is directly used in SQL query"
+    severity: ERROR
+    metadata:
+      cwe: CWE-89
+      category: security
+      confidence: HIGH
+
+  - id: java-xss
+    patterns:
+      - pattern: |
+          $RESP.getWriter().print($INPUT);
+      - pattern: |
+          $RESP.getWriter().println($INPUT);
+      - pattern: |
+          $RESP.getWriter().write($INPUT);
+    message: "XSS vulnerability detected: unsanitized user input is written to HTTP response"
+    severity: ERROR
+    metadata:
+      cwe: CWE-79
+      category: security
+      confidence: HIGH
+
+  - id: java-path-traversal
+    patterns:
+      - pattern: |
+          new File($INPUT);
+      - pattern: |
+          new FileInputStream($INPUT);
+      - pattern: |
+          new FileOutputStream($INPUT);
+      - pattern: |
+          new FileReader($INPUT);
+      - pattern: |
+          new FileWriter($INPUT);
+    message: "Path Traversal vulnerability detected: unsanitized user input is used in file operations"
+    severity: ERROR
+    metadata:
+      cwe: CWE-22
+      category: security
+      confidence: MEDIUM
+
+  - id: java-command-injection
+    patterns:
+      - pattern: |
+          Runtime.getRuntime().exec($INPUT);
+      - pattern: |
+          ProcessBuilder $PB = new ProcessBuilder(...);
+          ...
+          $PB.command($INPUT);
+    message: "Command Injection vulnerability detected: unsanitized user input is used in command execution"
+    severity: ERROR
+    metadata:
+      cwe: CWE-78
+      category: security
+      confidence: HIGH
+
+  - id: java-weak-crypto
+    patterns:
+      - pattern: "Cipher.getInstance(\"DES\")"
+      - pattern: "Cipher.getInstance(\"RC2\")"
+      - pattern: "Cipher.getInstance(\"RC4\")"
+      - pattern: "Cipher.getInstance(\"Blowfish\")"
+      - pattern: "MessageDigest.getInstance(\"MD5\")"
+      - pattern: "MessageDigest.getInstance(\"SHA-1\")"
+    message: "Weak Cryptography vulnerability detected: using outdated or weak cryptographic algorithm"
+    severity: ERROR
+    metadata:
+      cwe: CWE-327
+      category: security
+      confidence: HIGH
+
+  - id: java-insecure-random
+    patterns:
+      - pattern: "new Random()"
+      - pattern: "new java.util.Random()"
+      - pattern: "Math.random()"
+    message: "Insecure Random Number Generation: using predictable pseudorandom number generator"
+    severity: WARNING
+    metadata:
+      cwe: CWE-330
+      category: security
+      confidence: MEDIUM
+
+  - id: java-xxe
+    patterns:
+      - pattern: |
+          DocumentBuilderFactory $DBF = DocumentBuilderFactory.newInstance();
+          ...
+          !(... $DBF.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true) ...)
+      - pattern: |
+          SAXParserFactory $SPF = SAXParserFactory.newInstance();
+          ...
+          !(... $SPF.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true) ...)
+    message: "XXE vulnerability detected: XML parsing without disabling external entities"
+    severity: ERROR
+    metadata:
+      cwe: CWE-611
+      category: security
+      confidence: MEDIUM
+
+  - id: java-hardcoded-credentials
+    patterns:
+      - pattern-regex: "(?i)(password|passwd|pwd|secret|key|credential)\\s*=\\s*\"[^\"]{4,}\""
+      - pattern-regex: "(?i)(password|passwd|pwd|secret|key|credential)\\s*=\\s*'[^']{4,}'"
+    message: "Hardcoded Credentials detected: sensitive information should not be hardcoded"
+    severity: ERROR
+    metadata:
+      cwe: CWE-798
+      category: security
+      confidence: MEDIUM
+
+  - id: java-open-redirect
+    patterns:
+      - pattern: |
+          $RESP.sendRedirect($INPUT);
+    message: "Open Redirect vulnerability detected: user input is used directly in redirect"
+    severity: ERROR
+    metadata:
+      cwe: CWE-601
+      category: security
+      confidence: MEDIUM
+
+  - id: java-unsafe-deserialization
+    patterns:
+      - pattern: |
+          new ObjectInputStream($INPUT).readObject();
+      - pattern: |
+          ObjectInputStream $OIS = new ObjectInputStream($INPUT);
+          ...
+          $OIS.readObject();
+    message: "Unsafe Deserialization vulnerability detected: potential remote code execution"
+    severity: ERROR
+    metadata:
+      cwe: CWE-502
+      category: security
+      confidence: HIGH

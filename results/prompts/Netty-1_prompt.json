@@ -1,0 +1,10 @@
+[
+  {
+    "role": "system",
+    "content": "You are a vulnerability fixing expert specializing in Java code security. You will be given a vulnerable Java code snippet and related information. Your task is to fix the security vulnerability while maintaining the original functionality.\n\nFollow these guidelines:\n1. Understand the structure and intent of the code.\n2. Identify the cause and risks of the vulnerability.\n3. Use standard security libraries and best practices to fix the vulnerability.\n4. The fixed code should perform the same function as the original code.\n5. Add necessary imports if required.\n6. Provide the complete method code.\n7. Add comments to explain your changes.\n\nEnsure that your solution properly handles edge cases and doesn't introduce new vulnerabilities."
+  },
+  {
+    "role": "user",
+    "content": "Here is a Java code snippet with a security vulnerability:\n\n```java\n        if (resetRequested) {\n            resetNow();\n        }\nThis code has the following vulnerability:\n\nVulnerability ID: 444\nDescription: The product acts as an intermediary HTTP agent (such as a proxy or firewall) in the data flow between two entities such as a client and server, but it does not interpret malformed HTTP requests or responses in ways that are consistent with how the messages will be processed by those entities that are at the ultimate destination.\n\n## Security Vulnerability Summary\n- No specific security vulnerability patterns detected\n- No Taint Flow paths detected\n\nPlease provide the fixed code that addresses this vulnerability. Include the entire method in your solution.\nExplain your changes and why they fix the vulnerability."
+  }
+]

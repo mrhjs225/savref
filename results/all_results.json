@@ -1,0 +1,47 @@
+{
+  "config": {
+    "dataset_dir": "/media/hjs/ext_1tb/savref/dataset",
+    "results_dir": "/media/hjs/ext_1tb/savref/results",
+    "bug_id": "Netty-1",
+    "model_type": "openai",
+    "model_size": "large",
+    "use_graph": true,
+    "joern": true,
+    "codeql": true,
+    "semgrep": true,
+    "evaluate": true
+  },
+  "results": {
+    "Netty-1": {
+      "bug_id": "Netty-1",
+      "success": true,
+      "stages": {
+        "extraction": true,
+        "graph_building": true,
+        "inference": true,
+        "evaluation": true
+      },
+      "evaluation": {
+        "bug_id": "Netty-1",
+        "code_quality": 0.17973222468549674,
+        "details": {
+          "code_quality": {
+            "code_bleu": 0.17973222468549674
+          }
+        }
+      },
+      "elapsed_time": 24.634835958480835
+    }
+  },
+  "summary": {
+    "total": 1,
+    "success": 1,
+    "evaluation": {
+      "code_quality_avg": 0.17973222468549674,
+      "ngram_match_avg": 0.0,
+      "weighted_ngram_match_avg": 0.0,
+      "syntax_match_avg": 0.0,
+      "dataflow_match_avg": 0.0
+    }
+  }
+}
